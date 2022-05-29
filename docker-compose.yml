@@ -1,0 +1,57 @@
+version: '3.6'
+
+services:
+  application:
+    image: small-core-bank-tuum-interview-app:1
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    volumes:
+      - /data/small-core-bank-tuum-app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+      - rabbitmq
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/root
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=root
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/tuum_db
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      - DATABASE_HOST=127.0.0.1
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=tuum_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./docker_postgres_init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+
+  pgadmin-compose:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "test@gmail.com"
+      PGADMIN_DEFAULT_PASSWORD: "test123!"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    restart: always
+    volumes:
+      - ./init/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf:ro
+      - ./init/definitions.json:/etc/rabbitmq/definitions.json:ro
+    ports:
+      - "15672:15672"
+      - "5672:5672"

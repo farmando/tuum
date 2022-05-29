@@ -1,0 +1,13 @@
+{
+"queues": [
+  {
+    "name": "Q.TUUM.INTERVIEW",
+    "vhost": "/",
+    "durable": true,
+    "auto_delete": false,
+    "arguments": {
+      "x-queue-type": "classic"
+    }
+  }
+]
+}
