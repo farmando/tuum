@@ -48,7 +48,7 @@ tuum[root]
   └── docker_postgres_init.sql  
 ```
 ##### Docker compose
-+ `tuum/docker-compose.yml` - The file all services realted to the task. They are:
++ `tuum/docker-compose.yml` - The file has all services related to the task. They are:
   + The application itself 
   + postgres database
   + pgadmin
