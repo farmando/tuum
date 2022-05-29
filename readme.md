@@ -121,3 +121,26 @@ For example:
 + Lesson learned - First time I used *myBatis*. I had to learn how to use myBatis on the fly which ended up being more time-consuming than expected.
 + I am open to discuss about the test solution
 + Willing to have a feedback.
+
+# Bellow, the message request to be used to make a request:
+
++ create account:
+
+{
+  "customer_id":2,
+  "country":"Country",
+  "initial_balance" : 100.00,
+  "currency_list":[
+    "SEK"
+  ]
+}
+
++ create transaction:
+
+{
+  "fromAccount":1,
+  "toAccount":2,
+  "amount": 10.00,
+  "currency_id": "SEK",
+  "description": "test"
+}
